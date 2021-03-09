@@ -4,7 +4,7 @@ require "dotenv/load"
 
 module KyoBot
   
-  Bot = Discordrb::Commands::CommandBot.new token: ENV["TOKEN"], client_id: ENV["CLIENTID"], prefix: ENV["PREFIX"], ignore_bots: true
+  Bot = Discordrb::Commands::CommandBot.new token: ENV["TOKEN"] || "token", client_id: ENV["CLIENTID"], prefix: ENV["PREFIX"], ignore_bots: true
   
   Db = Sequel.sqlite("database/database.db")
   
@@ -21,13 +21,52 @@ module KyoBot
     Bot.game = "#{Bot.prefix}ping"
     puts "O bot #{Bot.profile.name} está online"
   end
+  
+  Bot.message(start_with: Bot.prefix) do |event|
+    
+   if event.user.id == 620346209185562653
+    puts "gh "
+   end
  
   module Comandos; end
   Dir["src/kyo/commands/*/*.rb"].each { |a| load a }
   Comandos.constants.each do |kkk|
     Bot.include! Comandos.const_get kkk
   end
-  
+  puts "teste 2"
+end
+
+print "── ── ── ── ── ── ── ██ ██ ██ ██ ── ██ ██ ██ ── 
+── ── ── ── ── ██ ██ ▓▓ ▓▓ ▓▓ ██ ██ ░░ ░░ ░░ ██ 
+── ── ── ── ██ ▓▓ ▓▓ ▓▓ ▓▓ ▓▓ ▓▓ ██ ░░ ░░ ░░ ██ 
+── ── ── ██ ▓▓ ▓▓ ▓▓ ██ ██ ██ ██ ██ ██ ░░ ░░ ██ 
+── ── ██ ▓▓ ▓▓ ▓▓ ██ ██ ██ ██ ██ ██ ██ ██ ░░ ██ 
+── ── ██ ▓▓ ██ ██ ░░ ░░ ░░ ░░ ░░ ░░ ██ ██ ██ ── 
+── ██ ██ ██ ██ ░░ ░░ ░░ ██ ░░ ██ ░░ ██ ▓▓ ▓▓ ██ 
+── ██ ░░ ██ ██ ░░ ░░ ░░ ██ ░░ ██ ░░ ██ ▓▓ ▓▓ ██ 
+██ ░░ ░░ ██ ██ ██ ░░ ░░ ░░ ░░ ░░ ░░ ░░ ██ ▓▓ ██ 
+██ ░░ ░░ ░░ ██ ░░ ░░ ██ ░░ ░░ ░░ ░░ ░░ ██ ▓▓ ██ 
+── ██ ░░ ░░ ░░ ░░ ██ ██ ██ ██ ░░ ░░ ██ ██ ██ ── 
+── ── ██ ██ ░░ ░░ ░░ ░░ ██ ██ ██ ██ ██ ▓▓ ██ ── 
+── ── ── ██ ██ ██ ░░ ░░ ░░ ░░ ░░ ██ ▓▓ ▓▓ ██ ── 
+── ░░ ██ ▓▓ ▓▓ ██ ██ ██ ██ ██ ██ ██ ▓▓ ██ ── ── 
+── ██ ▓▓ ▓▓ ▓▓ ▓▓ ██ ██ ░░ ░░ ░░ ██ ██ ── ── ── 
+██ ██ ▓▓ ▓▓ ▓▓ ▓▓ ██ ░░ ░░ ░░ ░░ ░░ ██ ── ── ── 
+██ ██ ▓▓ ▓▓ ▓▓ ▓▓ ██ ░░ ░░ ░░ ░░ ░░ ██ ── ── ── 
+██ ██ ██ ▓▓ ▓▓ ▓▓ ▓▓ ██ ░░ ░░ ░░ ██ ██ ██ ██ ── 
+── ██ ██ ██ ▓▓ ▓▓ ▓▓ ██ ██ ██ ██ ██ ██ ██ ██ ── 
+── ── ██ ██ ██ ██ ██ ██ ██ ██ ██ ██ ██ ▓▓ ▓▓ ██ 
+── ██ ▓▓ ▓▓ ██ ██ ██ ██ ██ ██ ██ ██ ▓▓ ▓▓ ▓▓ ██ 
+██ ██ ▓▓ ██ ██ ██ ██ ██ ██ ██ ██ ██ ▓▓ ▓▓ ▓▓ ██ 
+██ ▓▓ ▓▓ ██ ██ ██ ██ ██ ██ ██ ██ ██ ▓▓ ▓▓ ▓▓ ██ 
+██ ▓▓ ▓▓ ██ ██ ██ ██ ██ ── ── ── ██ ▓▓ ▓▓ ██ ██ 
+██ ▓▓ ▓▓ ██ ██ ── ── ── ── ── ── ── ██ ██ ██ ── 
+── ██ ██ ── ── ── ── ── ── ── ── ── ── ── ── ──\n"
+
+ if ENV["TOKEN"]
+  puts "Ligando o bot..."
   Bot.run
- 
+ else 
+   puts "O token está em outro castelo..."
+ end
 end
