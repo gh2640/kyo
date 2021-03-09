@@ -23,17 +23,13 @@ module KyoBot
   end
   
   Bot.message(start_with: Bot.prefix) do |event|
-    
-   if event.user.id == 620346209185562653
-    puts "gh "
-   end
  
   module Comandos; end
   Dir["src/kyo/commands/*/*.rb"].each { |a| load a }
   Comandos.constants.each do |kkk|
     Bot.include! Comandos.const_get kkk
   end
-  puts "teste 2"
+  puts "teste"
 end
 
 print "── ── ── ── ── ── ── ██ ██ ██ ██ ── ██ ██ ██ ── 
