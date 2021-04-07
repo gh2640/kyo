@@ -1,1 +1,1 @@
-require_relative "src/kyo.rb"
+require_relative "src/knight.rb"

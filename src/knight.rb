@@ -2,34 +2,32 @@ require "discordrb"
 require "sequel"
 require "dotenv/load"
 
-module KyoBot
+module KnightBot
   
   Bot = Discordrb::Commands::CommandBot.new token: ENV["TOKEN"] || "token", client_id: ENV["CLIENTID"], prefix: ENV["PREFIX"], ignore_bots: true
   
-  Db = Sequel.sqlite("database/database.db")
+  Db = Sequel.connect(ENV["POSTGRES"])
   
   unless Db.table_exists?(:users)
     Db.create_table :users do 
       Integer :id
-      Integer :money
-      Integer :bank
+      Boolean :blacklist
     end
   end
   
   Bot.ready do 
     Bot.dnd 
-    Bot.game = "#{Bot.prefix}ping"
+    Bot.game = "#{Bot.prefix}help"
     puts "O bot #{Bot.profile.name} está online"
   end
   
   Bot.message(start_with: Bot.prefix) do |event|
  
   module Comandos; end
-  Dir["src/kyo/commands/*/*.rb"].each { |a| load a }
-  Comandos.constants.each do |kkk|
-    Bot.include! Comandos.const_get kkk
+  Dir["src/modules/commands/*/*.rb"].each { |files| load files }
+  Comandos.constants.each do |commands|
+    Bot.include! Comandos.const_get commands
   end
-  puts "teste"
 end
 
 print "── ── ── ── ── ── ── ██ ██ ██ ██ ── ██ ██ ██ ── 

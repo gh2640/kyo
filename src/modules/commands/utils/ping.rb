@@ -1,4 +1,4 @@
-module KyoBot
+module KnightBot
   module Comandos
     module Ping 
        extend Discordrb::Commands::CommandContainer
